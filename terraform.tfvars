@@ -6,5 +6,5 @@ dockerfile_path       = "docker-source/Dockerfile"
 s3_codebuild_source   = "docker-source"
 codebuild_proj_name   = "TrivyScan"
 create_new_repo       = true
-codebuild_role_name   = "dPresCodeBuildRole"
-codebuild_policy_name = "dPresCodeBuildPolicy"
+codebuild_role_name   = "DockerScanCodeBuildRole"
+codebuild_policy_name = "DockerScanCodeBuildPolicy"
