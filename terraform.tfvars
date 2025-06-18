@@ -1,5 +1,5 @@
 aws_region            = "us-east-1"
-ecr_name              = "TrivyECR"
+ecr_name              = "trivy-ecr-scanned"
 bucket_name = "dpres-testing"
 buildspec_path        = "docker-source/buildspec.yml"
 dockerfile_path       = "docker-source/Dockerfile"
