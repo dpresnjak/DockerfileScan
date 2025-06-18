@@ -50,10 +50,10 @@ AWS Services created and used:
 ### Usage
 
 1. Login to AWS using *aws sso* or by copy-pasting access tokens to the CLI.
-2. Update *providers.tf* file with your bucket name for setting up S3 backend for storing the Terraform state file.
+2. Run *make s3 $yourbucketname* to update providers.tf and terraform.tfvars with your bucket name. Ex. *make s3 testingbucketdocker*. Won't be formatted that nicely in tfvars due to SED command.
 3. Run *terraform init* to initialize the Terraform modules and setup providers.
 4. Copy your *Dockerfile* to the build_source *directory*.
-5. Update *terraform.tfvars* for the S3 bucket name where the Dockerfile and buildspec will be stored, and other variables if needed.
+5. 
 6. Run *make plan* to view resources that will be deployed.
 7. Run *make apply* to deploy all resources.
 8. Run *make scan_image* to run the CodeBuild project that was created.
