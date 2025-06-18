@@ -17,7 +17,6 @@ AWS Services created and used:
 - Vulnerability scanning of Docker images using Trivy.
 - Infrastructure provisioning using Terraform for AWS resources.
 - Modular and extensible design for easy customization.
-- Support for exporting scan reports and artifacts.
 
 ---
 
