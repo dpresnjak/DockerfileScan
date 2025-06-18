@@ -3,15 +3,20 @@
 # Variables
 TF_OUTPUT_FILE := terraform-outputs.json
 CODEBUILD_PROJ_NAME := $(shell grep codebuild_proj_name terraform.tfvars | cut -d '"' -f2)
+BUILD_ID=$(shell aws codebuild list-builds-for-project --project-name $(CODEBUILD_PROJ_NAME) --sort-order DESCENDING --max-items 1 --output json --query ids[0])
+LOG_STREAM_NAME=$(shell aws codebuild batch-get-builds --ids $(BUILD_ID) --output json --query builds[0].logs.streamName)
 
 help:
 	@echo "Available commands:"
-	@echo "  make setup				 - Setup empty project files."
-	@echo "  make init               - Initialize Terraform"
-	@echo "  make plan               - Run Terraform plan"
-	@echo "  make apply              - Run Terraform apply and save outputs to JSON"
-	@echo "  make outputs            - Save current Terraform outputs to JSON"
-	@echo "  make s3 #yourbucketname - Update providers.tf and terraformvars.tf with your S3 bucket name."
+	@echo "	make setup					- Setup empty Terraform project files."
+	@echo "	make init					- Initialize Terraform"
+	@echo "	make plan					- Run Terraform plan"
+	@echo "	make apply					- Run Terraform apply and save outputs to JSON"
+	@echo "	make outputs					- Save current Terraform outputs to JSON"
+	@echo "	make s3 yourbucketname				- Update providers.tf and terraformvars.tf with your S3 bucket name."
+	@echo "	make scan_image					- Start the deployed CodeBuild project."
+	@echo " make tail_logs					- Start tailing and following the full log group across streams; easier to read."
+	@echo "	make get_logs					- Get CloudWatch logs from the latest CodeBuild project run."
 
 setup:
 	mkdir modules environments
@@ -35,9 +40,16 @@ s3:
 	sed -i 's~bucket_name = ".*"~bucket_name = "'"$$bucket"'"~g' terraform.tfvars
 
 scan_image:
-	@set -x; \
-	echo "Extracted project name: '$(CODEBUILD_PROJ_NAME)'"; \
+	@echo "Extracted project name: '$(CODEBUILD_PROJ_NAME)'"; \
 	aws codebuild start-build --project-name "$(CODEBUILD_PROJ_NAME)"
+
+get_logs:
+	echo "Build ID: $(BUILD_ID)"
+	echo "Log stream name: $(LOG_STREAM_NAME)"
+	aws logs get-log-events --log-group-name /aws/codebuild/$(CODEBUILD_PROJ_NAME) --log-stream-name $(LOG_STREAM_NAME) --start-from-head --output text
+
+tail_logs:
+	aws logs tail /aws/codebuild/$(CODEBUILD_PROJ_NAME) --follow
 
 outputs:
 	terraform output -json > $(TF_OUTPUT_FILE)
@@ -45,9 +57,6 @@ outputs:
 
 destroy:
 	terraform destroy
-
-clean:
-	rm -f $(TF_OUTPUT_FILE)
 
 # Prevent make from trying to build the bucket name as a target
 %:

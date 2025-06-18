@@ -24,7 +24,7 @@ phases:
       - echo "----------------- Listing Docker images. ---------------------"
       - docker images
       - echo "----------------- Running Trivy vulnerability scanning. ---------------------"
-      - trivy image -o $REPOSITORY_NAME:latest
+      - trivy image $REPOSITORY_NAME:latest
   post_build:
     commands:
       - echo "Build completed at $(date)"

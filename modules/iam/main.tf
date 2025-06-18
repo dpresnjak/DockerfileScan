@@ -40,6 +40,14 @@ data "aws_iam_policy_document" "codebuild_permissions" {
 
   statement {
     effect = "Allow"
+    actions = [
+      "ecr:GetAuthorizationToken",
+    ]
+    resources = [ "*" ]
+  }
+
+  statement {
+    effect = "Allow"
 
     actions = [
       "ecr:GetAuthorizationToken",

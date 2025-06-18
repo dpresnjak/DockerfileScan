@@ -30,7 +30,7 @@ AWS Services created and used:
   Sample Dockerfile(s) used for building images to be scanned.
 
 - `Makefile`  
-  Automation scripts for common tasks like building images, running scans, and deploying infrastructure.
+  Automation scripts for most tasks like deploying infrastructure code, starting CodeBuild project, fetching logs.
 
 - `modules/`  
   Terraform modules to organize and reuse infrastructure code.
@@ -53,7 +53,7 @@ AWS Services created and used:
 2. Run *make s3 $yourbucketname* to update providers.tf and terraform.tfvars with your bucket name. Ex. *make s3 testingbucketdocker*. Won't be formatted that nicely in tfvars due to SED command.
 3. Run *terraform init* to initialize the Terraform modules and setup providers.
 4. Copy your *Dockerfile* to the build_source *directory*.
-5. 
-6. Run *make plan* to view resources that will be deployed.
-7. Run *make apply* to deploy all resources.
-8. Run *make scan_image* to run the CodeBuild project that was created.
+5. Run *make plan* to view resources that will be deployed.
+6. Run *make apply* to deploy all resources.
+7. Run *make scan_image* to run the CodeBuild project that was created.
+8. Run *make tail_logs* to follow CloudWatch logs and view results in real-time. (Optional)
