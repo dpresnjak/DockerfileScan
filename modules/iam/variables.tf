@@ -19,3 +19,7 @@ variable "codebuild_policy_name" {
   description = "IAM Policy name for CodeBuild policy."
   type        = string
 }
+
+variable "ecr_repo_arn" {
+  type = string
+}
