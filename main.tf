@@ -60,7 +60,7 @@ module "iam" {
   region                = data.aws_region.current.name
   codebuild_role_name   = var.codebuild_role_name
   codebuild_policy_name = var.codebuild_policy_name
-  ecr_repo_arn = local.ecr_repo_arn
+  ecr_repo_arn          = local.ecr_repo_arn
 }
 
 ###############

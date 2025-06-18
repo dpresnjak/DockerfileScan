@@ -15,7 +15,7 @@ help:
 	@echo "	make outputs					- Save current Terraform outputs to JSON"
 	@echo "	make s3 yourbucketname				- Update providers.tf and terraformvars.tf with your S3 bucket name."
 	@echo "	make scan_image					- Start the deployed CodeBuild project."
-	@echo " make tail_logs					- Start tailing and following the full log group across streams; easier to read."
+	@echo "	make tail_logs					- Start tailing and following the full log group across streams; easier to read."
 	@echo "	make get_logs					- Get CloudWatch logs from the latest CodeBuild project run."
 
 setup:

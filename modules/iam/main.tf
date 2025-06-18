@@ -43,7 +43,7 @@ data "aws_iam_policy_document" "codebuild_permissions" {
     actions = [
       "ecr:GetAuthorizationToken",
     ]
-    resources = [ "*" ]
+    resources = ["*"]
   }
 
   statement {
@@ -60,7 +60,7 @@ data "aws_iam_policy_document" "codebuild_permissions" {
 
     resources = [
       var.ecr_repo_arn
-      ]
+    ]
   }
 }
 
