@@ -1,0 +1,10 @@
+aws_region            = "us-east-1"
+ecr_name              = "TrivyECR"
+bucket_name           = "dpres-testing"
+buildspec_path        = "docker-source/buildspec.yml"
+dockerfile_path       = "docker-source/Dockerfile"
+s3_codebuild_source   = "docker-source"
+codebuild_proj_name   = "TrivyScan"
+create_new_repo       = true
+codebuild_role_name   = "dPresCodeBuildRole"
+codebuild_policy_name = "dPresCodeBuildPolicy"

@@ -1,0 +1,36 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - DATE_TAG=$(date +%Y%m%d%H%M%S)
+      - echo "----------------- Debugging. ---------------------"
+      - echo $AWS_REGION
+      - echo $AWS_ACCOUNT_ID 
+      - echo $REPOSITORY_URI
+      - echo $REPOSITORY_NAME
+      - echo $DATE_TAG
+      - echo "----------------- Debugging. ---------------------"
+      - echo "Installing Trivy"
+      - curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+      - echo "Preparing to build Docker image"
+      # If you need to log in to ECR, add login commands here
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+  build:
+    commands:
+      - echo "----------------- Building the Docker image. ---------------------"
+      - docker build -t $REPOSITORY_NAME .
+      - docker tag $REPOSITORY_NAME:latest $REPOSITORY_URI:$DATE_TAG
+      - echo "----------------- Listing Docker images. ---------------------"
+      - docker images
+      - echo "----------------- Running Trivy vulnerability scanning. ---------------------"
+      - trivy image -o $REPOSITORY_NAME:latest
+  post_build:
+    commands:
+      - echo "Build completed at $(date)"
+      #- docker push $REPOSITORY_URI:latest
+      - docker push $REPOSITORY_URI:$DATE_TAG
+
+artifacts:
+  files:
+    - '**/*'
