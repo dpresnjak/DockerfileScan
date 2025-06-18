@@ -2,7 +2,7 @@
 
 ## Overview
 
-**DockerfileScan** is an infrastructure-as-code project designed to automate the building, scanning, and analysis of Docker images, focusing on identifying vulnerabilities and misconfigurations in Dockerfiles and container images. The project leverages tools like [Trivy](https://github.com/aquasecurity/trivy) for vulnerability scanning and integrates with AWS services via Terraform for scalable, repeatable deployments.
+******DockerfileScan****** is an infrastructure-as-code project designed to automate the building, scanning, and analysis of Docker images, focusing on identifying vulnerabilities and misconfigurations in Dockerfiles and container images. The project leverages tools like [Trivy](https://github.com/aquasecurity/trivy) for vulnerability scanning and integrates with AWS services via Terraform for scalable, repeatable deployments.
 
 AWS Services created and used:
 - S3
@@ -48,11 +48,11 @@ AWS Services created and used:
 
 ### Usage
 
-1. Login to AWS using *aws sso* or by copy-pasting access tokens to the CLI.
-2. Run *make s3 $yourbucketname* to update providers.tf and terraform.tfvars with your bucket name. Ex. *make s3 testingbucketdocker*. Won't be formatted that nicely in tfvars due to SED command.
-3. Run *terraform init* to initialize the Terraform modules and setup providers.
-4. Copy your *Dockerfile* to the build_source *directory*.
-5. Run *make plan* to view resources that will be deployed.
-6. Run *make apply* to deploy all resources.
-7. Run *make scan_image* to run the CodeBuild project that was created.
-8. Run *make tail_logs* to follow CloudWatch logs and view results in real-time. (Optional)
+1. Login to AWS using ***aws sso*** or by copy-pasting access tokens to the CLI.
+2. Run ***make s3 $yourbucketname*** to update providers.tf and terraform.tfvars with your bucket name. Ex. ***make s3 testingbucketdocker***. Won't be formatted that nicely in tfvars due to SED command.
+3. Run ***terraform init*** to initialize the Terraform modules and setup providers.
+4. Copy your ***Dockerfile*** to the ***build_source*** directory.
+5. Run ***make plan*** to view resources that will be deployed.
+6. Run ***make apply*** to deploy all resources.
+7. Run ***make scan_image*** to run the CodeBuild project that was created.
+8. Run ***make tail_logs*** to follow CloudWatch logs and view results in real-time. (Optional)
