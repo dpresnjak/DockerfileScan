@@ -17,7 +17,6 @@ AWS Services created and used:
 - Vulnerability scanning of Docker images using Trivy.
 - Infrastructure provisioning using Terraform for AWS resources.
 - Modular and extensible design for easy customization.
-- Support for exporting scan reports and artifacts.
 
 ---
 
@@ -57,3 +56,6 @@ AWS Services created and used:
 6. Run *make apply* to deploy all resources.
 7. Run *make scan_image* to run the CodeBuild project that was created.
 8. Run *make tail_logs* to follow CloudWatch logs and view results in real-time. (Optional)
+9. Run *make plan* to view resources that will be deployed.
+10. Run *make apply* to deploy all resources.
+11. Run *make scan_image* to run the CodeBuild project that was created.
