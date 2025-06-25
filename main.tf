@@ -30,7 +30,7 @@ resource "aws_s3_object" "dockerfile" {
 #############
 module "ecr" {
   source          = "./modules/ecr"
-  create_new_repo = var.create_new_repo
+  repo_exists = var.repo_exists
   ecr_name        = var.ecr_name
 }
 

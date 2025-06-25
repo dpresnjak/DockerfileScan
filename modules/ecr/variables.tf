@@ -3,6 +3,6 @@ variable "ecr_name" {
   type        = string
 }
 
-variable "create_new_repo" {
+variable "repo_exists" {
   type = bool
 }

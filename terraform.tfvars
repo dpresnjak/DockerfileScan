@@ -5,6 +5,6 @@ buildspec_path        = "docker-source/buildspec.yml"
 dockerfile_path       = "docker-source/Dockerfile"
 s3_codebuild_source   = "docker-source"
 codebuild_proj_name   = "TrivyScan"
-create_new_repo       = true
+repo_exists           = true
 codebuild_role_name   = "DockerScanCodeBuildRole"
 codebuild_policy_name = "DockerScanCodeBuildPolicy"
