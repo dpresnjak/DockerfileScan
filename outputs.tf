@@ -1,9 +1,9 @@
 output "ecr_uri" {
-  value = local.ecr_repo_url
+  value = module.ecr.ecr_uri
 }
 
 output "ecr_arn" {
-  value = local.ecr_repo_arn
+  value = module.ecr.ecr_repo_arn
 }
 
 output "repository_name" {

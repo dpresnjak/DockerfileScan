@@ -28,27 +28,11 @@ resource "aws_s3_object" "dockerfile" {
 #############
 #### ECR ####
 #############
-
-# Check if an ECR exists
-data "aws_ecr_repository" "existing" {
-  count = var.create_new_repo ? 0 : 1
-  name  = var.ecr_name
+module "ecr" {
+  source = "./modules/ecr"
+  create_new_repo = var.create_new_repo
+  ecr_name = var.ecr_name
 }
-
-# Create new ECR for Docker image if it doesn't.
-resource "aws_ecr_repository" "ecr_repo" {
-  count = var.create_new_repo ? 1 : 0
-  name  = var.ecr_name
-
-  image_tag_mutability = "MUTABLE"
-}
-
-#
-locals {
-  ecr_repo_url = var.create_new_repo ? aws_ecr_repository.ecr_repo[0].repository_url : data.aws_ecr_repository.existing[0].repository_url
-  ecr_repo_arn = var.create_new_repo ? aws_ecr_repository.ecr_repo[0].arn : data.aws_ecr_repository.existing[0].arn
-}
-
 
 #############
 #### IAM ####
@@ -60,7 +44,7 @@ module "iam" {
   region                = data.aws_region.current.name
   codebuild_role_name   = var.codebuild_role_name
   codebuild_policy_name = var.codebuild_policy_name
-  ecr_repo_arn          = local.ecr_repo_arn
+  ecr_repo_arn          = module.ecr.ecr_repo_arn
 }
 
 ###############
@@ -71,7 +55,7 @@ module "build" {
   region              = data.aws_region.current.name
   account_id          = data.aws_caller_identity.current.account_id
   bucket_name         = var.bucket_name
-  ecr_uri             = local.ecr_repo_url
+  ecr_uri             = module.ecr.ecr_repo_arn
   codebuild_role      = module.iam.codebuild_role
   image_repo_name     = var.ecr_name
   codebuild_proj_name = var.codebuild_proj_name
